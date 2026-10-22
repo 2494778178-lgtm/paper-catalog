@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Paper Catalog · 本地论文目录</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="catalog.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main>
+    <header>
+      <span class="eyebrow">LOCAL LIBRARY / 本地文献</span>
+      <h1>让论文文件，<br>有一份清楚的目录。</h1>
+      <p class="intro">选择 PDF 文件或文件夹，查找完全相同的副本，导出可搜索的文献清单。</p>
+      <span class="privacy">离线运行 · 文件留在你的浏览器中</span>
+    </header>
+    <section class="import-card" aria-label="导入论文">
+      <div><h2>从你的文件开始</h2><p>支持批量 PDF。目录和年份来自文件名，不读取论文正文。</p></div>
+      <div class="actions">
+        <label class="button primary" for="pdf-files">选择 PDF<input id="pdf-files" type="file" accept=".pdf,application/pdf" multiple></label>
+        <label class="button secondary" for="pdf-folder">选择文件夹<input id="pdf-folder" type="file" webkitdirectory multiple></label>
+        <button id="demo" class="text-button" type="button">先看演示</button>
+      </div>
+      <p id="status" role="status" aria-live="polite">尚未选择文件。每次导入会替换当前目录。</p>
+      <p class="small">仅核对 PDF 文件头；不验证全文是否完整。大于 100 MiB 的文件保留目录记录，但跳过重复检测。</p>
+    </section>
+    <section class="summary" aria-label="目录统计">
+      <div><strong id="total">0</strong><span>PDF 文件</span></div>
+      <div><strong id="duplicates">0</strong><span>重复副本</span></div>
+      <div><strong id="total-size">0 B</strong><span>总大小</span></div>
+      <div><strong id="visible-count">0</strong><span>当前显示</span></div>
+    </section>
+    <section class="library" aria-label="文献清单">
+      <div class="toolbar">
+        <label class="search">搜索<input id="search" type="search" placeholder="输入文件名、目录或年份" autocomplete="off"></label>
+        <label>排序<select id="sort"><option value="title">文件标题 A–Z</option><option value="year">年份由新到旧</option><option value="size">大小由大到小</option></select></label>
+        <label class="check"><input id="only-duplicates" type="checkbox">只看重复组</label>
+      </div>
+      <div class="list-heading"><h2>你的文献目录 <span id="demo-badge" hidden>演示数据</span></h2><div class="actions"><button id="export-csv" disabled>导出 CSV</button><button id="export-md" disabled>导出 Markdown</button><button id="clear" class="text-button" disabled>清空</button></div></div>
+      <p class="small">导出包含当前筛选结果。重复组按整个导入目录计算；“文件标题”和“年份”仅从文件名推测。</p>
+      <div class="table-wrap"><table><thead><tr><th scope="col">文件标题 / 路径</th><th scope="col">年份（推测）</th><th scope="col">大小</th><th scope="col">重复检测</th></tr></thead><tbody id="rows"></tbody></table></div>
+      <div id="empty" class="empty">选择一个装着论文的文件夹，开始整理。</div>
+      <details id="issues-box" hidden><summary id="issues-summary">导入提示</summary><ul id="issues"></ul></details>
+    </section>
+    <footer>Paper Catalog 0.1 · 没有账号、追踪脚本或外部请求。关闭页面会清除当前目录；原始文件不会被修改。</footer>
+  </main>
+</body>
+</html>
